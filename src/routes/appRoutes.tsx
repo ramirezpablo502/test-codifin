@@ -8,7 +8,7 @@ const AppRoutes = () => {
       <Suspense fallback={<div></div>}>
         <Switch>
           {routes.map(({ path, component: Component }) => (
-            <Route key={path} path={path} render={() => <Component />} />
+            <Route key={path} path={path} component={Component} />
           ))}
         </Switch>
       </Suspense>
