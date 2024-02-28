@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { fetchProducts } from "../../store/productsSlice";
 
+import NavbarComponent from "../../components/navbar/navbar";
+
 const DashboardPage: React.FC<{}> = () => {
   const dispatch = useDispatch();
   const { items: products, status } = useSelector(
@@ -17,6 +19,7 @@ const DashboardPage: React.FC<{}> = () => {
 
   return (
     <div>
+      <NavbarComponent title="products list" />
       {status === "loading" ? (
         <div>Loading</div>
       ) : (
