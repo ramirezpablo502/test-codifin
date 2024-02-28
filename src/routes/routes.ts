@@ -1,5 +1,7 @@
+import React from "react";
 import { IRoutesProps } from "./model";
-import DashboardPage from "../pages/dashboard";
+
+const DashboardPage = React.lazy(() => import("../pages/dashboard/dashboard"));
 
 export const routes: IRoutesProps[] = [
   {
