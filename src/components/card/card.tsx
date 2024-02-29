@@ -3,10 +3,14 @@ import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { CardProps } from "./model";
 import { Wrapper } from "./style";
 import { useDispatch } from "react-redux";
+import {
+  decrementQuantity,
+  incrementQuantity,
+  setShoppingCart,
+} from "../../store/shoppingCartSlice";
 
 import ButtonComponent from "../button/button";
 import ModalComponent from "../modal/modal";
-import { setShoppingCart } from "../../store/shoppingCartSlice";
 
 const CardComponent: React.FC<CardProps> = ({
   name,
@@ -16,6 +20,7 @@ const CardComponent: React.FC<CardProps> = ({
   showDetails = true,
   showAddCart = true,
   counterItems = 0,
+  showCounter = false,
 }) => {
   const [openModal, setOpenModal] = useState(false);
 
@@ -37,6 +42,15 @@ const CardComponent: React.FC<CardProps> = ({
       image,
     };
     dispatch(setShoppingCart(payload));
+    onCloseModal();
+  };
+
+  const handleIncrement = () => {
+    dispatch(incrementQuantity({ name: name }));
+  };
+
+  const handleDecrement = () => {
+    dispatch(decrementQuantity({ name: name }));
   };
 
   return (
@@ -45,7 +59,7 @@ const CardComponent: React.FC<CardProps> = ({
         <CardMedia sx={{ height: 140 }} image={image} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {name} {counterItems > 0 ? `(${counterItems})` : null}
+            {name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {description}
@@ -72,6 +86,13 @@ const CardComponent: React.FC<CardProps> = ({
             />
           )}
         </div>
+        {showCounter && (
+          <div className="counter">
+            <ButtonComponent onClick={handleDecrement} text="-" width="10px" />
+            <p className="number">{counterItems}</p>
+            <ButtonComponent onClick={handleIncrement} text="+" width="10px" />
+          </div>
+        )}
       </Card>
 
       <ModalComponent open={openModal} onClose={onCloseModal}>
@@ -84,7 +105,7 @@ const CardComponent: React.FC<CardProps> = ({
         <h2>${price} MXN</h2>
         <br />
         <ButtonComponent
-          onClick={onOpenModal}
+          onClick={handleAddCart}
           text="Add to cart"
           width="100%"
         />
