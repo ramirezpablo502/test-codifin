@@ -6,4 +6,5 @@ export interface CardProps {
   showDetails?: boolean;
   showAddCart?: boolean;
   counterItems?: number;
+  showCounter?: boolean;
 }

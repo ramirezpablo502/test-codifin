@@ -16,6 +16,7 @@ export const Wrapper = styled.div`
     transition: right 0.3s ease;
     padding: 20px;
     overflow: scroll;
+    z-index: 1;
   }
 
   .menu.open {

@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { getShoppingCart } from "../../store/shoppingCartSlice";
 
 import ButtonComponent from "../button/button";
-import { Grid } from "@mui/material";
+import { Badge, Grid } from "@mui/material";
 import CardComponent from "../card/card";
 
 const LateralMenuComponent: React.FC<LateralMenuProps> = ({
@@ -20,11 +20,19 @@ const LateralMenuComponent: React.FC<LateralMenuProps> = ({
       0
     );
 
+  const getTotalCartAmount = () =>
+    shoppingCart.reduce(
+      (total: any, item: any) => total + item.price * item.quantity,
+      0
+    );
+
   return (
     <Wrapper>
       <div className={`menu ${showCart ? "open" : ""}`}>
         <br />
-        <h1>Shopping cart ({getTotalProducts()})</h1>
+        <Badge badgeContent={getTotalProducts()} color="primary">
+          <h1>Shopping cart</h1>
+        </Badge>
         <br />
         <br />
         <div className="container">
@@ -41,12 +49,16 @@ const LateralMenuComponent: React.FC<LateralMenuProps> = ({
                     showDetails={false}
                     showAddCart={false}
                     counterItems={quantity}
+                    showCounter={true}
                   />
                 </Grid>
               );
             })}
           </Grid>
         </div>
+        <br />
+        <br />
+        <h1>Total: ${getTotalCartAmount()}</h1>
         <br />
         <br />
         <ButtonComponent
